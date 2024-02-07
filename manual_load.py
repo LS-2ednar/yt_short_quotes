@@ -8,8 +8,8 @@ connection = connect("quotes.db")
 df_excel = pd.read_excel("quotes.xlsx")
 
 # Define the range of rows you want to iterate over
-start_row = 0        # Starting row index
-end_row   = 20000    # Ending row index (exclusive)
+start_row =  20000    # Starting row index
+end_row   = 170000    # Ending row index (exclusive)
 
 # Iterate over the specified range of rows
 for index, row in tqdm(df_excel.iloc[start_row:end_row].iterrows()):
