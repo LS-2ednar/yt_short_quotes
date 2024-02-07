@@ -22,6 +22,7 @@ if not duplicates.empty:
 
 else:
     print("No duplicates found.")
+    print(f"Entries in database: {len(df)}")
 
 # Close the database connection
 connection.close()
