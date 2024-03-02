@@ -1,32 +1,34 @@
-from moviepy.editor import *
+import cv2
 
-# Define the dimensions of the video
-width, height = 1080, 1920
 
-# Duration of the video
-video_duration = 30  # seconds
+# Open a video capture object 
+cap = cv2.VideoCapture(0) 
 
-# Create a clip with a cyan background
-cyan_clip = ColorClip((width, height), color=(0, 255, 255)).set_duration(video_duration)
+# Define the codec and create a VideoWriter object 
+fourcc = cv2.VideoWriter_fourcc(*"XVID") 
+out = cv2.VideoWriter("output.avi", fourcc, 20.0, (640, 480)) 
 
-# Add text for the quote
-quote_text = "Your quote goes here"
-quote_clip = TextClip(quote_text, fontsize=70, color='white', bg_color='cyan')
-quote_clip = quote_clip.set_position(('center', height // 3)).set_duration(video_duration)  
+# Capture video frames and write them to the file 
+while cap.isOpened(): 
+    ret, frame = cap.read() 
+    if ret: 
 
-# Add text for the author
-author_text = "Author's name"
-author_clip = TextClip(author_text, fontsize=50, color='white', bg_color='cyan')
-author_clip = author_clip.set_position(('center', 2 * height // 3)).set_duration(video_duration)
+      # Flip the frame horizontally 
+      frame = cv2.flip(frame, 1) 
 
-# Composite the text clips on the cyan background
-final_clip = CompositeVideoClip([cyan_clip, quote_clip, author_clip])
+      # Write the frame to the output file 
+      out.write(frame) 
 
-# Write the final video to a file
-final_clip.write_videofile("output_video.mp4", codec='libx264', fps=24)  # Adjust codec and fps as needed
+      # Display the resulting frame 
+      cv2.imshow("frame", frame) 
 
-# Close the clips
-cyan_clip.close()
-quote_clip.close()
-author_clip.close()
-final_clip.close()
+      # Exit if the user presses the ‘q’ key 
+      if cv2.waitKey(1) & 0xFF == ord("q"): 
+          break 
+    else: 
+      break 
+      
+# Release the resources 
+cap.release() 
+out.release() 
+cv2.destroyAllWindows()
