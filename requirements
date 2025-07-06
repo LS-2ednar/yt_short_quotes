@@ -2,3 +2,5 @@ praw #reddit api for testing
 pyttsx3  #text to speach
 selenium #screenshotsi
 moviepy
+google-genai==1.12.1
+python-dotenv==1.1.0
