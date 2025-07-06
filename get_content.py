@@ -27,13 +27,14 @@ def generate_content(client,message,riddle_file,goal_entries=1000):
                 )
         
         print("Done creating new riddles")
-        with open(riddle_file,"a+") as f:
-            entries = len([x for x in f.read() if x == "["])
-
-        for line in response.text.split("\n"):
-            print(line)
-            f.write(f"\n{line}")
-        f.close()
+        with open(riddle_file,"a") as f:
+            for line in response.text.split("\n"):
+                if "[" in line and "]" in line:
+                    print(line)
+                    f.write(f"\n{line.strip()}")
+            f.close()
+        with open(riddle_file, "r") as f:
+            entries = len(f.readlines())
         print(f"Currently {entries} riddles out of {goal_entries} riddles have been generated.")
 
 if __name__ == "__main__":
